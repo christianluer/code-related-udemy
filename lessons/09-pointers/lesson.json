@@ -1,0 +1,45 @@
+{
+  "title": "Pointers",
+  "course_section": "Pointers",
+  "hints": {
+    "TestAddOne": "*p = *p + 1  (or (*p)++)",
+    "TestSwap": "*a, *b = *b, *a",
+    "TestChangeFirstValue": "p.First = s; return p. You changed a copy, so you must return it.",
+    "TestChangeFirstPointer": "p.First = s. Go auto-dereferences pointers to structs, so this is (*p).First.",
+    "TestMethodSets": "Give *Kid both methods with POINTER receivers (Birthday must mutate), then return &Kid{Name: name, Age: age}.",
+    "TestNewInt": "x := v; return &x",
+    "TestDoubleAll": "for i := range xs { xs[i] *= 2 }"
+  },
+  "quiz": [
+    {
+      "q": "x := 5; p := &x; *p = 10. What is x?",
+      "options": ["5", "10", "an address", "compile error"],
+      "answer": 1,
+      "why": "Assigning through a dereferenced pointer changes the original variable."
+    },
+    {
+      "q": "A method declared as func (k *Kid) Grow() is in the method set of...",
+      "options": ["Kid only", "*Kid only", "both Kid and *Kid", "neither"],
+      "answer": 1,
+      "why": "Pointer-receiver methods belong to *T. Value-receiver methods belong to both T and *T."
+    },
+    {
+      "q": "Is it safe to return a pointer to a local variable in Go?",
+      "options": ["no, it dangles", "yes, escape analysis moves it to the heap", "only for ints", "only with new()"],
+      "answer": 1,
+      "why": "The compiler sees the escape and heap-allocates the value."
+    },
+    {
+      "q": "Which command shows escape analysis decisions?",
+      "options": ["go vet -escape", "go build -gcflags=-m", "go run -race", "go tool trace"],
+      "answer": 1,
+      "why": "-gcflags=-m prints the compiler's escape and inlining decisions."
+    },
+    {
+      "q": "For a small struct you don't need to mutate, which semantics does the course recommend?",
+      "options": ["pointer semantics", "value semantics", "global variables", "interfaces only"],
+      "answer": 1,
+      "why": "Value semantics are simpler and safer, and the value likely stays on the stack."
+    }
+  ]
+}

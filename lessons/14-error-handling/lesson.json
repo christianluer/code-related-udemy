@@ -1,0 +1,44 @@
+{
+  "title": "Error handling",
+  "course_section": "Error handling",
+  "hints": {
+    "TestReadConfig": "b, err := os.ReadFile(path); if err != nil { return nil, fmt.Errorf(\"read config %s: %w\", path, err) }; return b, nil",
+    "TestParseAge": "n, err := strconv.Atoi(s); if err != nil { return 0, fmt.Errorf(\"parse age %q: %w\", s, err) }; if n < 0 || n > 150 { return 0, fmt.Errorf(\"%d: %w\", n, ErrInvalidAge) }",
+    "TestCustomErr": "func (c CustomErr) Error() string { return \"custom error: \" + c.Info }. Describe(err) just returns err.Error().",
+    "TestSqrt": "if f < 0 { return 0, &SqrtError{Lat: \"50.2289 N\", Long: \"99.4656 W\", Err: fmt.Errorf(\"negative number: %v\", f)} }. SqrtError.Error can use fmt.Sprintf(\"math error: %v %v %v\", ...).",
+    "TestSafeDivide": "Use a NAMED error result and a deferred func: defer func() { if r := recover(); r != nil { err = fmt.Errorf(\"recovered: %v\", r) } }(), then just return a / b.",
+    "TestValidateAll": "Collect the non-nil errors from every check(v) into a slice, then return errors.Join(errs...). Join returns nil for no errors."
+  },
+  "quiz": [
+    {
+      "q": "What is the difference between %w and %v in fmt.Errorf?",
+      "options": ["none", "%w wraps the error so errors.Is/As can find it", "%v wraps, %w only formats", "%w is for warnings"],
+      "answer": 1,
+      "why": "Only %w creates an unwrappable chain."
+    },
+    {
+      "q": "Do deferred functions run after log.Fatalln?",
+      "options": ["yes", "no, it calls os.Exit immediately", "only in main", "only if you recover"],
+      "answer": 1,
+      "why": "os.Exit terminates right away. log.Panicln does run deferred funcs."
+    },
+    {
+      "q": "Where does recover() actually stop a panic?",
+      "options": ["anywhere", "only when called directly inside a deferred function", "in init()", "in a goroutine"],
+      "answer": 1,
+      "why": "recover returns nil unless called from a deferred func during panicking."
+    },
+    {
+      "q": "Which function checks whether a *specific error VALUE* is anywhere in a wrapped chain?",
+      "options": ["errors.As", "errors.Is", "errors.Unwrap", "err == target"],
+      "answer": 1,
+      "why": "errors.Is compares values through the chain. errors.As finds a TYPE."
+    },
+    {
+      "q": "What makes a type an error?",
+      "options": ["embedding errors.Error", "having an Error() string method", "being created with errors.New", "a struct tag"],
+      "answer": 1,
+      "why": "error is just an interface with one method."
+    }
+  ]
+}

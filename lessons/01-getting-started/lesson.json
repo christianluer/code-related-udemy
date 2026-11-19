@@ -1,0 +1,42 @@
+{
+  "title": "Getting going with Go",
+  "course_section": "Course introduction, Getting going with Go",
+  "hints": {
+    "TestGreeting": "Just put an emoji like 😃 or 🌴 in the string. Go source files are UTF-8.",
+    "TestRawLiteral": "Wrap the text in backticks (`...`) instead of double quotes so \\n stays as two characters.",
+    "TestByteAndRuneCount": "len(s) gives bytes; utf8.RuneCountInString(s) (package unicode/utf8) gives runes.",
+    "TestCodePoints": "Range over the string to get runes, and use fmt.Sprintf(\"%U\", r)."
+  },
+  "quiz": [
+    {
+      "q": "Which function is the entry point of a Go executable?",
+      "options": ["func init() in any package", "func main() in package main", "func Main() in package app", "func start() in package main"],
+      "answer": 1,
+      "why": "A program is the main package plus its imports, and execution begins at func main."
+    },
+    {
+      "q": "What does len(\"世界\") return?",
+      "options": ["2", "4", "6", "8"],
+      "answer": 2,
+      "why": "len counts bytes. Each of those characters takes 3 bytes in UTF-8."
+    },
+    {
+      "q": "What is the type `rune` an alias for?",
+      "options": ["uint8", "int32", "string", "int64"],
+      "answer": 1,
+      "why": "A rune is a Unicode code point stored as an int32. A byte is a uint8."
+    },
+    {
+      "q": "What does the parameter `a ...any` in fmt.Println mean?",
+      "options": ["exactly one argument of any type", "a slice that must be passed with ...", "zero or more arguments of any type", "a pointer to any value"],
+      "answer": 2,
+      "why": "It is a variadic parameter of the empty interface type."
+    },
+    {
+      "q": "Which is a raw string literal?",
+      "options": ["\"hello\\n\"", "'hello'", "`hello\\n`", "r\"hello\""],
+      "answer": 2,
+      "why": "Backticks create raw string literals: escape sequences are not processed."
+    }
+  ]
+}

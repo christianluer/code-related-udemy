@@ -1,0 +1,58 @@
+{
+  "title": "Functions, methods & interfaces",
+  "course_section": "Functions in the go programming language",
+  "hints": {
+    "TestMultipleReturns": "return a / b, a % b",
+    "TestVariadic": "Inside Sum, nums is a []int: range over it. SumSlice just returns Sum(xi...).",
+    "TestDefer": "Use a NAMED result (log []string). Deferred funcs can modify it after the return: defer func() { log = append(log, \"one\") }() ... then append \"body\" and return log.",
+    "TestMethods": "fmt.Sprintf(\"I am %s and I am %d years old\", p.First, p.Age)",
+    "TestStringer": "fmt.Sprintf(\"%s (%d)\", p.First, p.Age). Don't call fmt.Sprint(p) inside String(): that recurses forever!",
+    "TestInterfaces": "Square: s.Length * s.Width. Circle: math.Pi * math.Pow(c.Radius, 2). Info: fmt.Sprintf(\"area: %.2f\", s.Area())",
+    "TestWriter": "_, err := w.Write([]byte(\"Hello, \" + name + \"!\\n\")); return err  (or fmt.Fprintf(w, ...))",
+    "TestDoMath": "DoMath just calls f(a, b).",
+    "TestMockDB": "u, err := ds.GetUser(id); if err != nil { return \"\", fmt.Errorf(\"greet: %w\", err) }; return \"Hello, \" + u.Name, nil",
+    "TestFuncExpression": "return func() int { return 42 }",
+    "TestCallback": "fmt.Sprintf(\"the square of %d is %d\", n, f(n))",
+    "TestClosure": "n := 0; return func() int { n++; return n }",
+    "TestRecursion": "if n <= 1 { return 1 }; return n * Factorial(n-1)",
+    "TestWrapper": "start := time.Now(); f(); return time.Since(start)"
+  },
+  "quiz": [
+    {
+      "q": "In what order do these print? defer fmt.Print(1); defer fmt.Print(2); fmt.Print(3)",
+      "options": ["123", "321", "312", "132"],
+      "answer": 2,
+      "why": "3 prints first, then deferred calls run LIFO: 2, then 1."
+    },
+    {
+      "q": "How does a type implement an interface in Go?",
+      "options": ["with the implements keyword", "by embedding the interface", "implicitly, by having all its methods", "by registering it in init()"],
+      "answer": 2,
+      "why": "Interface satisfaction is implicit."
+    },
+    {
+      "q": "How do you pass xs := []int{1,2} to func sum(n ...int)?",
+      "options": ["sum(xs)", "sum(xs...)", "sum(...xs)", "sum(&xs)"],
+      "answer": 1,
+      "why": "The ... after the slice unfurls it."
+    },
+    {
+      "q": "What is a closure?",
+      "options": ["a func that closes a file", "a func value that captures variables from its enclosing scope", "a deferred func", "a func with no return"],
+      "answer": 1,
+      "why": "The inner func keeps access to outer variables even after the outer func returns."
+    },
+    {
+      "q": "Which interface does a type satisfy to control how fmt.Println prints it?",
+      "options": ["fmt.Printer", "fmt.Stringer", "io.Writer", "fmt.Formatter only"],
+      "answer": 1,
+      "why": "fmt.Stringer: String() string."
+    },
+    {
+      "q": "Go passes arguments...",
+      "options": ["by reference", "by value, always", "by value for ints, by reference for structs", "by sharing"],
+      "answer": 1,
+      "why": "Everything in Go is pass by value. Pointers and slice headers are values too."
+    }
+  ]
+}

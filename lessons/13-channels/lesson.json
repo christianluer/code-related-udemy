@@ -1,0 +1,54 @@
+{
+  "title": "Channels & context",
+  "course_section": "Channels",
+  "hints": {
+    "TestGenerate": "c := make(chan int); go func() { defer close(c); for i := range n { c <- i } }(); return c",
+    "TestCollect": "for v := range c { out = append(out, v) }",
+    "TestBuffered": "c := make(chan int, len(values)); send every value; close(c); return c. No goroutine is needed because the buffer is big enough.",
+    "TestReceive": "v, ok := <-c; return v, ok",
+    "TestFirstOf": "select { case s := <-a: return s; case s := <-b: return s }",
+    "TestWithTimeout": "select { case v := <-c: return v, true; case <-time.After(d): return 0, false }",
+    "TestProducers": "Launch g goroutines that each send n values on one channel, plus one more goroutine that waits on a WaitGroup and then closes the channel. Range over it.",
+    "TestFanIn": "out := make(chan int); one goroutine per input does `for v := range in { out <- v }`; a WaitGroup goroutine closes out when they're all done.",
+    "TestFanOut": "Send job indexes on a jobs channel; start `workers` goroutines that read indexes and write results[i] = f(jobs[i]); close jobs; wg.Wait().",
+    "TestCountUntilCancel": "In the goroutine: for i := 0; ; i++ { select { case out <- i: case <-ctx.Done(): close(out); return } }"
+  },
+  "quiz": [
+    {
+      "q": "c := make(chan int); c <- 1; fmt.Println(<-c) in main does what?",
+      "options": ["prints 1", "deadlocks: fatal error, all goroutines are asleep", "prints 0", "compile error"],
+      "answer": 1,
+      "why": "An unbuffered send blocks until someone receives, and nobody else is running."
+    },
+    {
+      "q": "What does the type <-chan int mean?",
+      "options": ["send-only", "receive-only", "bidirectional", "a closed channel"],
+      "answer": 1,
+      "why": "Read left to right: the arrow points out of the chan, so you receive from it."
+    },
+    {
+      "q": "When does `for v := range c` stop?",
+      "options": ["when c is empty", "when c is closed (and drained)", "after len(c) iterations", "never"],
+      "answer": 1,
+      "why": "range on a channel receives until the channel is closed."
+    },
+    {
+      "q": "v, ok := <-c gives ok == false when...",
+      "options": ["c is empty", "c is closed and empty", "c is nil", "v is zero"],
+      "answer": 1,
+      "why": "This is the comma ok idiom for channels."
+    },
+    {
+      "q": "If several select cases are ready at once, which runs?",
+      "options": ["the first one", "the last one", "one chosen at random", "all of them"],
+      "answer": 2,
+      "why": "select picks uniformly at random among ready cases."
+    },
+    {
+      "q": "What is context mainly used for?",
+      "options": ["logging", "cancellation, deadlines and request-scoped values", "storing global config", "replacing channels"],
+      "answer": 1,
+      "why": "It propagates cancellation signals and deadlines across goroutines and APIs."
+    }
+  ]
+}

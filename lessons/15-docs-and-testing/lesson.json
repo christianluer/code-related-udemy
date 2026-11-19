@@ -1,0 +1,51 @@
+{
+  "title": "Docs, testing & benchmarking",
+  "course_section": "Writing documentation, Testing & Benchmarking",
+  "hints": {
+    "TestYears": "return human * 7",
+    "TestCount": "len(strings.Fields(s))",
+    "TestUseCount": "m := map[string]int{}; for _, w := range strings.Fields(s) { m[w]++ }",
+    "TestCenteredAvg": "Sort a COPY (slices.Clone, then slices.Sort), drop the first and last element, then average the rest as float64. If fewer than 3 numbers, return 0.",
+    "ExampleYears": "Example funcs compare printed output to the // Output: comment. Fix Years and this passes.",
+    "ExampleCount": "Fix Count.",
+    "ExampleCenteredAvg": "Fix CenteredAvg."
+  },
+  "quiz": [
+    {
+      "q": "Which signature makes a function a test?",
+      "options": ["func testAdd()", "func TestAdd(t *testing.T)", "func Test_add(t testing.T)", "func AddTest(t *testing.T)"],
+      "answer": 1,
+      "why": "TestXxx(*testing.T) in a _test.go file."
+    },
+    {
+      "q": "How do you run benchmarks?",
+      "options": ["go bench", "go test -bench .", "go test -benchmark", "go run -bench"],
+      "answer": 1,
+      "why": "-bench takes a regex; '.' matches all."
+    },
+    {
+      "q": "What makes an Example function verify its output?",
+      "options": ["t.Output()", "a trailing // Output: comment", "returning a string", "the -example flag"],
+      "answer": 1,
+      "why": "Without an // Output: comment the example is compiled but not run."
+    },
+    {
+      "q": "A doc comment for func Years should start with...",
+      "options": ["// This function", "// Years", "/** Years", "// Docs:"],
+      "answer": 1,
+      "why": "Doc comments begin with the name of the thing being documented."
+    },
+    {
+      "q": "How do you see coverage in your browser?",
+      "options": ["go test -cover -web", "go test -coverprofile c.out, then go tool cover -html=c.out", "go cover open", "godoc -cover"],
+      "answer": 1,
+      "why": "Write a profile, then render it."
+    },
+    {
+      "q": "What is the difference between t.Error and t.Fatal?",
+      "options": ["none", "Fatal stops the current test immediately; Error keeps going", "Error stops all tests", "Fatal panics the program"],
+      "answer": 1,
+      "why": "Use Fatal when continuing makes no sense (e.g. a nil result you would dereference)."
+    }
+  ]
+}

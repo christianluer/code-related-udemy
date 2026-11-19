@@ -1,0 +1,51 @@
+{
+  "title": "Control flow",
+  "course_section": "Control Flow",
+  "hints": {
+    "TestBucket": "Use x >= 0 && x <= 100 style conditions in an if / else if chain, or a tagless switch.",
+    "TestDescribePair": "Check the cases in the given order: the first one that matches wins. 'y is not 5' is y != 5.",
+    "TestOdds": "Loop i from 0 to n inclusive; if i%2 == 0 { continue }; otherwise append i.",
+    "TestFirstMultiple": "for i := start; ; i++ { if i%k == 0 { return i } } (or break out of the loop and return after it).",
+    "TestGrid": "Two nested for loops; append fmt.Sprintf(\"%d,%d\", i, j).",
+    "TestIndexValues": "for i, v := range xi { ... fmt.Sprintf(\"%d:%d\", i, v) }",
+    "TestAgeOf": "if age, ok := m[name]; ok { ... } else { ... }"
+  },
+  "quiz": [
+    {
+      "q": "What does fmt.Println(true && false || true) print?",
+      "options": ["true", "false", "compile error", "nil"],
+      "answer": 0,
+      "why": "&& binds tighter than ||: (true && false) || true is true."
+    },
+    {
+      "q": "Does a Go switch case fall through to the next case by default?",
+      "options": ["yes, like C", "no, you need the fallthrough keyword", "only in tagless switches", "only for default"],
+      "answer": 1,
+      "why": "Go cases break automatically. fallthrough opts in."
+    },
+    {
+      "q": "Which loop keywords does Go have?",
+      "options": ["for, while, do", "for only", "for and loop", "for and foreach"],
+      "answer": 1,
+      "why": "for covers classic, while-style, infinite and range loops."
+    },
+    {
+      "q": "What is 17 % 5?",
+      "options": ["3", "2", "3.4", "12"],
+      "answer": 1,
+      "why": "17 = 3*5 + 2, so the remainder is 2."
+    },
+    {
+      "q": "What is the benefit of `if x := f(); x > 3 { }`?",
+      "options": ["it runs faster", "x is scoped to the if/else, keeping scope narrow", "it allows x to be reassigned", "it is required syntax"],
+      "answer": 1,
+      "why": "The init statement limits x's scope to the if/else blocks."
+    },
+    {
+      "q": "Can rand.IntN(250) return 250?",
+      "options": ["yes", "no, the range is [0, 250)", "only on 64-bit systems", "it returns 1..250"],
+      "answer": 1,
+      "why": "IntN returns a value in the half-open interval [0, n)."
+    }
+  ]
+}

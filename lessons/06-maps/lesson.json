@@ -1,0 +1,44 @@
+{
+  "title": "Maps",
+  "course_section": "Grouping data values - map",
+  "hints": {
+    "TestFavorites": "return map[string][]string{ `bond_james`: {`shaken, not stirred`, `martinis`, `fast cars`}, ... }",
+    "TestAddFavorite": "m[person] = append(m[person], thing). Appending to a nil slice works, so a missing person is fine.",
+    "TestRemove": "_, ok := m[key]; delete(m, key); return ok",
+    "TestWordFrequency": "counts := make(map[string]int); for _, w := range words { counts[strings.ToLower(w)]++ }",
+    "TestSortedKeys": "Collect keys into a slice, then sort.Strings(keys) (or slices.Sort).",
+    "TestTopWords": "Get the keys, then sort.Slice(keys, func(i, j int) bool { if freq[keys[i]] != freq[keys[j]] { return freq[keys[i]] > freq[keys[j]] }; return keys[i] < keys[j] }), then return keys[:n] (careful if n > len)."
+  },
+  "quiz": [
+    {
+      "q": "m := map[string]int{}; what is m[\"missing\"]?",
+      "options": ["nil", "a panic", "0", "-1"],
+      "answer": 2,
+      "why": "A missing key yields the zero value of the element type."
+    },
+    {
+      "q": "var m map[string]int; m[\"a\"] = 1 results in:",
+      "options": ["m has one entry", "a panic: assignment to entry in nil map", "a compile error", "nothing happens"],
+      "answer": 1,
+      "why": "A nil map can be read but not written. Use make or a literal."
+    },
+    {
+      "q": "Is map iteration order guaranteed?",
+      "options": ["yes, insertion order", "yes, sorted by key", "no, it is randomized", "only for string keys"],
+      "answer": 2,
+      "why": "Go deliberately randomizes map iteration order."
+    },
+    {
+      "q": "Which type can NOT be a map key?",
+      "options": ["string", "int", "[]string", "struct{ X, Y int }"],
+      "answer": 2,
+      "why": "Keys must be comparable. Slices are not comparable."
+    },
+    {
+      "q": "What does delete(m, \"nope\") do when \"nope\" is not in m?",
+      "options": ["panics", "returns an error", "nothing", "inserts a zero value"],
+      "answer": 2,
+      "why": "Deleting a missing key is a no-op."
+    }
+  ]
+}

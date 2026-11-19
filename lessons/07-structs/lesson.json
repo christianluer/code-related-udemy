@@ -1,0 +1,44 @@
+{
+  "title": "Structs",
+  "course_section": "Grouping data values - structs",
+  "hints": {
+    "TestNewPerson": "return Person{First: first, Last: last, Flavors: flavors}",
+    "TestByLastName": "m := make(map[string]Person, len(people)); for _, p := range people { m[p.Last] = p }",
+    "TestNewVehicle": "Vehicle{Engine: Engine{Electric: electric}, Make: make, ...}",
+    "TestIsElectric": "Thanks to promotion you can write v.Electric instead of v.Engine.Electric.",
+    "TestNewProfile": "Initialize Friends with make(map[string]int) or map[string]int{} so callers can write to it.",
+    "TestFullNames": "Range over people and append p.First + \" \" + p.Last."
+  },
+  "quiz": [
+    {
+      "q": "What does embedding a struct (a field with no name) give you?",
+      "options": ["inheritance with virtual methods", "promotion of the inner type's fields and methods", "a pointer to the inner struct", "nothing; it's a syntax error"],
+      "answer": 1,
+      "why": "The inner type's fields and methods are promoted to the outer type."
+    },
+    {
+      "q": "Which verb prints a struct WITH its field names?",
+      "options": ["%v", "%+v", "%s", "%T"],
+      "answer": 1,
+      "why": "%+v adds field names. %#v prints Go syntax."
+    },
+    {
+      "q": "In Go you don't instantiate a class. Instead you...",
+      "options": ["construct an object", "create a VALUE of a TYPE", "call new on a prototype", "clone a template"],
+      "answer": 1,
+      "why": "Go is all about types and values."
+    },
+    {
+      "q": "What is a good use for an anonymous struct?",
+      "options": ["public APIs", "one-off data like test tables", "types that need methods", "never; they are deprecated"],
+      "answer": 1,
+      "why": "Anonymous structs can't have methods and aren't reusable, so they suit one-off data."
+    },
+    {
+      "q": "What is the zero value of a struct?",
+      "options": ["nil", "a struct whose fields all hold their zero values", "undefined", "an empty map"],
+      "answer": 1,
+      "why": "Every field is set to its own zero value."
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "title": "Concurrency",
+  "course_section": "Concurrency",
+  "hints": {
+    "TestRunAll": "var wg sync.WaitGroup; for _, f := range fns { wg.Add(1); go func() { defer wg.Done(); f() }() }; wg.Wait()",
+    "TestMethodSets": "Implement Speak on *Person (pointer receiver). SaySomething(h Human) returns h.Speak().",
+    "TestMutexCounter": "Lock in both Inc and Value: c.mu.Lock(); defer c.mu.Unlock(); ...",
+    "TestAtomicCounter": "atomic.AddInt64(&c.n, 1) and atomic.LoadInt64(&c.n) from sync/atomic.",
+    "TestParallelSum": "Split nums into `workers` chunks. Each goroutine sums its chunk into results[w] (its own slot, so no race). Wait, then add up the results."
+  },
+  "quiz": [
+    {
+      "q": "What happens to running goroutines when main returns?",
+      "options": ["main waits for them", "they keep running in the background", "the program exits and they are stopped", "they panic"],
+      "answer": 2,
+      "why": "Program execution ends when main returns. Use a WaitGroup or channels to wait."
+    },
+    {
+      "q": "Concurrency vs parallelism:",
+      "options": ["the same thing", "concurrency is structure (dealing with many things); parallelism is simultaneous execution", "parallelism needs goroutines; concurrency needs threads", "concurrency is only for I/O"],
+      "answer": 1,
+      "why": "Concurrent code CAN run in parallel on multiple cores, but doesn't have to."
+    },
+    {
+      "q": "How do you detect a race condition?",
+      "options": ["go vet", "the -race flag", "go build -gcflags=-m", "they can't be detected"],
+      "answer": 1,
+      "why": "go run -race / go test -race instruments memory accesses."
+    },
+    {
+      "q": "Where should wg.Add(1) be called?",
+      "options": ["inside the goroutine", "before starting the goroutine", "after wg.Wait()", "anywhere"],
+      "answer": 1,
+      "why": "If Add runs inside the goroutine, Wait might return before Add happens."
+    },
+    {
+      "q": "Which is NOT a way to fix a data race on a counter?",
+      "options": ["sync.Mutex", "sync/atomic", "runtime.Gosched()", "passing ownership over a channel"],
+      "answer": 2,
+      "why": "Gosched only yields the processor. It synchronizes nothing."
+    }
+  ]
+}

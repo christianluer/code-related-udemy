@@ -1,0 +1,44 @@
+{
+  "title": "Generics",
+  "course_section": "Generics",
+  "hints": {
+    "TestSum": "var total T; for _, x := range xs { total += x }; return total",
+    "TestMax": "if len(xs) == 0 { var zero T; return zero, false }; m := xs[0]; loop and compare with >.",
+    "TestContains": "Range and compare with ==, which comparable allows. (slices.Contains does the same.)",
+    "TestMap": "out := make([]U, 0, len(xs)); for _, x := range xs { out = append(out, f(x)) }",
+    "TestFilter": "Append x when keep(x) is true.",
+    "TestStack": "Push: append. Pop: if empty return zero, false; v := s.items[len(s.items)-1]; s.items = s.items[:len(s.items)-1]."
+  },
+  "quiz": [
+    {
+      "q": "What does ~int in a constraint mean?",
+      "options": ["exactly int", "any type whose underlying type is int", "int or nil", "approximately an int"],
+      "answer": 1,
+      "why": "The tilde includes named types like `type myInt int`."
+    },
+    {
+      "q": "Which constraint allows the == operator?",
+      "options": ["any", "comparable", "cmp.Ordered only", "fmt.Stringer"],
+      "answer": 1,
+      "why": "comparable is the set of types that support == and !=."
+    },
+    {
+      "q": "Can you declare `var x interface{ ~int | ~float64 }`?",
+      "options": ["yes", "no, type-set interfaces can only be used as constraints", "only inside generic funcs", "only with a type assertion"],
+      "answer": 1,
+      "why": "Interfaces with type unions are constraint-only."
+    },
+    {
+      "q": "Where does cmp.Ordered live today?",
+      "options": ["golang.org/x/exp/constraints only", "the standard library package cmp", "package sort", "it's a builtin"],
+      "answer": 1,
+      "why": "Since Go 1.21 it's in the standard library cmp package."
+    },
+    {
+      "q": "Generics give you ___ polymorphism, interfaces give you ___ polymorphism.",
+      "options": ["runtime, compile-time", "compile-time, runtime", "no, runtime", "dynamic, static"],
+      "answer": 1,
+      "why": "Generic code is type-checked and instantiated at compile time, while interface values dispatch at runtime."
+    }
+  ]
+}

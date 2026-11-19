@@ -1,0 +1,45 @@
+{
+  "title": "JSON, sort & bcrypt",
+  "course_section": "Application",
+  "hints": {
+    "TestMarshalUsers": "bs, err := json.Marshal(users); return string(bs), err. The struct tags in types.go already pick the JSON names.",
+    "TestUnmarshalUsers": "var users []User; err := json.Unmarshal([]byte(data), &users). Note the &.",
+    "TestEncodeUsers": "return json.NewEncoder(w).Encode(users)",
+    "TestSortSayings": "for _, u := range users { sort.Strings(u.Sayings) }. u is a copy of the User, but its Sayings slice still shares the underlying array.",
+    "TestSortByAge": "sort.Slice(users, func(i, j int) bool { return users[i].Age < users[j].Age })",
+    "TestSortByLast": "Compare Last first; when Last is equal, compare First.",
+    "TestBcrypt": "bcrypt.GenerateFromPassword([]byte(pw), bcrypt.MinCost) returns []byte, so convert it with string(...). Check: bcrypt.CompareHashAndPassword([]byte(hash), []byte(pw)) == nil"
+  },
+  "quiz": [
+    {
+      "q": "Why would json.Marshal output {} for a struct with fields `first string; age int`?",
+      "options": ["missing struct tags", "the fields are unexported (lowercase)", "it needs a pointer", "ints can't be marshaled"],
+      "answer": 1,
+      "why": "encoding/json only sees exported fields."
+    },
+    {
+      "q": "Why must you pass &v to json.Unmarshal?",
+      "options": ["style", "so Unmarshal can write into your variable", "to avoid a copy for speed only", "you don't have to"],
+      "answer": 1,
+      "why": "Pass by value: without a pointer, Unmarshal would fill a copy."
+    },
+    {
+      "q": "Which writes JSON straight to os.Stdout?",
+      "options": ["json.Marshal(os.Stdout)", "json.NewEncoder(os.Stdout).Encode(v)", "fmt.Println(json.Encode(v))", "os.Stdout.JSON(v)"],
+      "answer": 1,
+      "why": "Encoder works with any io.Writer."
+    },
+    {
+      "q": "Two bcrypt hashes of the same password are...",
+      "options": ["identical", "different, because of a random salt", "different only if the cost changes", "always 32 bytes of hex"],
+      "answer": 1,
+      "why": "Use CompareHashAndPassword to check a password."
+    },
+    {
+      "q": "The less func passed to sort.Slice returns...",
+      "options": ["an int: -1, 0 or 1", "true if element i should come before element j", "the smaller element", "nothing"],
+      "answer": 1,
+      "why": "sort.Slice uses a less(i, j int) bool func. (slices.SortFunc uses an int-returning cmp func.)"
+    }
+  ]
+}

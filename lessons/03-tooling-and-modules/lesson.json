@@ -1,0 +1,49 @@
+{
+  "title": "Tooling, modules & packages",
+  "course_section": "Programming fundamentals, dev environment, go mod, housekeeping",
+  "hints": {
+    "TestIncrement": "Declare `var count int` OUTSIDE the function (package scope) so it survives between calls, then `count++` and return it.",
+    "TestIsExported": "Decode the first rune with utf8.DecodeRuneInString(name) and check unicode.IsUpper(r). Watch out for the empty string.",
+    "TestSHA256Hex": "sum := sha256.Sum256(data); return hex.EncodeToString(sum[:]) (packages crypto/sha256 and encoding/hex), or fmt.Sprintf(\"%x\", sum).",
+    "TestBump": "strings.TrimPrefix(v, \"v\"), strings.Split(..., \".\"), strconv.Atoi each part. Bumping minor resets patch; bumping major resets minor and patch.",
+    "TestPlatform": "runtime.GOOS + \"/\" + runtime.GOARCH"
+  },
+  "quiz": [
+    {
+      "q": "In Go, what makes an identifier visible outside its package?",
+      "options": ["the `public` keyword", "starting it with a capital letter", "declaring it in main.go", "putting it in an exported block"],
+      "answer": 1,
+      "why": "Capitalized identifiers are exported. Lowercase ones are not."
+    },
+    {
+      "q": "What does `go mod tidy` do?",
+      "options": ["formats your code", "adds missing and removes unused dependencies, updating go.sum", "deletes the module cache", "upgrades every dependency to latest"],
+      "answer": 1,
+      "why": "It makes go.mod and go.sum match what your code actually imports."
+    },
+    {
+      "q": "A release adds a new backwards-compatible feature to v1.4.2. The next version is:",
+      "options": ["v2.0.0", "v1.5.0", "v1.4.3", "v1.5.2"],
+      "answer": 1,
+      "why": "MINOR is bumped for backwards-compatible features, and PATCH resets to 0."
+    },
+    {
+      "q": "How do you build a Linux binary from a Mac?",
+      "options": ["go build --linux", "GOOS=linux go build", "go cross linux", "you need a Linux machine"],
+      "answer": 1,
+      "why": "Set the GOOS (and optionally GOARCH) environment variables."
+    },
+    {
+      "q": "What is the difference between an expression and a statement?",
+      "options": ["there is none", "an expression evaluates to a value; a statement performs an action", "statements return values; expressions don't", "expressions only exist in if conditions"],
+      "answer": 1,
+      "why": "2+7 is an expression. x := 2+7 is a statement."
+    },
+    {
+      "q": "chmod 754 gives the world (others) which permissions?",
+      "options": ["read, write, execute", "read, execute", "read", "none"],
+      "answer": 2,
+      "why": "The digits are owner, group, world. 4 = read only."
+    }
+  ]
+}

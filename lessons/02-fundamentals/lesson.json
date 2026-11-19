@@ -1,0 +1,51 @@
+{
+  "title": "The fundamentals of Go",
+  "course_section": "The fundamentals of Go",
+  "hints": {
+    "TestDescribe": "fmt.Sprintf(\"%v (%T)\", v, v)",
+    "TestFormats": "fmt.Sprintf with %d, %b and %#x.",
+    "TestByteSizes": "const ( _ = iota; KB = 1 << (10 * iota); MB; GB; ... ). The expression repeats for every line.",
+    "TestWeekdays": "Write `Sunday Weekday = iota` on the first line, then just the names on the next lines.",
+    "TestLimits": "int8 max is 127 and uint8 max is 255. You can also use math.MaxInt8 and math.MaxUint8.",
+    "TestAverage": "Convert before dividing: float64(sum) / float64(len(nums)). Guard against an empty slice.",
+    "TestOnesCount": "Loop while n > 0: add n & 1 to a count, then shift n >>= 1."
+  },
+  "quiz": [
+    {
+      "q": "What is the zero value of a string?",
+      "options": ["nil", "\"\"", "\" \"", "undefined"],
+      "answer": 1,
+      "why": "Strings are never nil. The zero value is the empty string."
+    },
+    {
+      "q": "Where can you use the short declaration operator := ?",
+      "options": ["anywhere", "only at package level", "only inside functions", "only in for loops"],
+      "answer": 2,
+      "why": "Outside a function every statement starts with a keyword (var, func, ...)."
+    },
+    {
+      "q": "What does `var a int = 1; var b float64 = a` do?",
+      "options": ["b becomes 1.0", "compile error: you must convert with float64(a)", "runtime panic", "b becomes 0"],
+      "answer": 1,
+      "why": "Go never mixes numeric types implicitly. You write a conversion T(x)."
+    },
+    {
+      "q": "In `const ( A = iota; B; C )`, what is C?",
+      "options": ["0", "1", "2", "3"],
+      "answer": 2,
+      "why": "iota starts at 0 in each const block and increments on every line."
+    },
+    {
+      "q": "What is 1 << 10?",
+      "options": ["10", "100", "1000", "1024"],
+      "answer": 3,
+      "why": "Shifting left by n multiplies by 2^n."
+    },
+    {
+      "q": "Which verb prints the TYPE of a value?",
+      "options": ["%v", "%t", "%T", "%y"],
+      "answer": 2,
+      "why": "%T prints the type. (%t is for booleans.)"
+    }
+  ]
+}
